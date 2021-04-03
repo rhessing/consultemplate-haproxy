@@ -13,8 +13,9 @@ RUN apk --update add \
         wget \
         zip \
         && wget -O consul-template.zip https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
-        && unzip /consul-template.zip \
-        && mv /consul-template /usr/local/bin/consul-template \
+        && unzip consul-template.zip \
+        && mv consul-template /usr/local/bin/consul-template \
+        && chmod 755 /usr/local/bin/consul-template \
         && mkdir -p /etc/consul-template/config.d /etc/consul-template/template.d \
         && apk del wget zip
         && rm -rf /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
