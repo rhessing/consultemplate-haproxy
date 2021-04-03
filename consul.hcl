@@ -11,7 +11,7 @@ reload_signal = "SIGHUP"
 kill_signal = "SIGINT"
 max_stale = "10m"
 log_level = "warn"
-pid_file = "/consul-template/consul-template.pid"
+pid_file = "/run/consul-template.pid"
 
 wait {
     min = "5s"
