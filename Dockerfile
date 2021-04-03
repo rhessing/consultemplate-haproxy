@@ -17,7 +17,7 @@ RUN apk --update add \
         && mv consul-template /usr/local/bin/consul-template \
         && chmod 755 /usr/local/bin/consul-template \
         && mkdir -p /etc/consul-template/config.d /etc/consul-template/template.d \
-        && apk del wget zip
+        && apk del wget zip \
         && rm -rf /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
         && rm -rf /tmp/* \
         && rm /var/cache/apk/* \ 
