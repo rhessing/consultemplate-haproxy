@@ -8,7 +8,7 @@ RUN apk --update add \
         bash \
         ca-certificates \
         haproxy \
-        libnl3
+        libnl3 \
         tini \
         wget \
         zip \
