@@ -2,30 +2,32 @@ FROM alpine:3.13.4
 
 MAINTAINER R. Hessing
 
+ENV CONSUL_TEMPLATE_VERSION=0.25.2
+
 RUN apk --update add \
         bash \
         ca-certificates \
         haproxy \
         libnl3
         tini \
+        wget \
         zip \
+        && wget -O consul-template.zip https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
+        && unzip /consul-template.zip \
+        && mv /consul-template /usr/local/bin/consul-template \
+        && mkdir -p /etc/consul-template/config.d /etc/consul-template/template.d \
+        && apk del wget zip
+        && rm -rf /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
         && rm -rf /tmp/* \
         && rm /var/cache/apk/* \ 
-        && rm -rf /var/lib/apt/lists/*
+        && rm -rf /var/lib/apt/lists/* \ 
 
-ADD https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip /
-
-RUN unzip /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
-   && mv /consul-template /usr/local/bin/consul-template \
-   && mkdir -p /etc/consul-template/config.d /etc/consul-template/template.d \
-   && rm -rf /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip
-
-ADD consul.cfg /etc/consul-template/config.d/consul.cfg
-ADD haproxy-consul.cfg /etc/consul-template/config.d/haproxy.cfg
-ADD haproxy.tmpl /etc/consul-template/template.d/haproxy.tmpl
-
+COPY consul.hcl /etc/consul-template/config.d/consul.hcl
+COPY haproxy.hcl /etc/consul-template/config.d/haproxy.hcl
+COPY haproxy.ctmpl /etc/consul-template/template.d/haproxy.ctmpl
+COPY haproxy-reload.sh /usr/local/bin/
 COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh /usr/local/bin/haproxy-reload.sh
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
