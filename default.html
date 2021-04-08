@@ -1,11 +1,17 @@
+HTTP/1.0 503 Service Unavailable
+Cache-Control: no-cache
+Connection: close
+Content-Type: text/html
+
 <!DOCTYPE html>
-<html>
-<head>
-<title>Default LB</title>
-</head>
-<body>
-
-<h1>%%NOMAD_GROUP_NAME%%</h1>
-
-</body>
-</html> 
+<html> 
+  <head>
+    <title>503 -  Service Unavailable</title>
+  </head> 
+  <body>
+    <div> 
+          <h2 >Sorry. We're not here right now.</h2>
+          <h6>Server: %%NOMAD_GROUP_NAME%%</h6>
+    </div>
+  </body> 
+</html>
