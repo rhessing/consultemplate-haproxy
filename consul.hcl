@@ -1,5 +1,11 @@
 consul {
     address = "%%CONSUL_CLIENT_HTTPS%%"
+
+    ssl {
+        enabled = true
+        verify = false
+    }
+
     retry {
         enabled = true
         attempts = 12
