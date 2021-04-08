@@ -18,13 +18,19 @@ defaults
     timeout server  50000
 
 resolvers consul
-    nameserver consul 127.0.0.1:8600
+    nameserver consul %%CONSUL_CLIENT_DNS%%
     accepted_payload_size 8192
     hold valid 3s
 
 frontend http_front
     bind *:80
     use_backend %[req.hdr(host),lower,word(1,:)]
+    default_backend haproxy
+
+backend haproxy
+    mode http
+    http-request set-log-level silent
+    errorfile 503 /etc/haproxy/static/default.html
 
 {{ range $i, $service := services }}{{ range $tag := .Tags }}{{ if $tag | regexMatch "^domain=.+" }}{{ $domain := index (. | split "=") 1 }}{{ if $service.Tags | contains "edge" }}
 backend {{$domain}}

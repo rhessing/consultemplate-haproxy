@@ -1,5 +1,5 @@
 consul {
-    address = "locahost:8500"
+    address = "%%CONSUL_CLIENT_HTTPS%%"
     retry {
         enabled = true
         attempts = 12
