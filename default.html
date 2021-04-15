@@ -6,12 +6,14 @@ Content-Type: text/html
 <!DOCTYPE html>
 <html> 
   <head>
-    <title>503 -  Service Unavailable</title>
+    <title>Nomad ingress controller - Default endpoint</title>
   </head> 
   <body>
     <div> 
-          <h2 >Sorry. We're not here right now.</h2>
-          <h6>Server: %%NOMAD_GROUP_NAME%%</h6>
+          <h2>You have reached the Nomad edge node.</h2>
+          <h4>The Nomad ingress controller is operational. This is the default response of the Nomad edge node.</h4>
+          <h4>However if you tried to reach a domain then the Nomad job, task and service was not configured correctly.</h4>
+          <h5>Server: %%NOMAD_GROUP_NAME%%</h5>
     </div>
   </body> 
 </html>
